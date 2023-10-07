@@ -1,0 +1,68 @@
+{
+  "name": "@libhub/utils",
+  "type": "module",
+  "version": "0.2.1",
+  "packageManager": "pnpm@8.6.3",
+  "description": "A toolkit for common JavaScript / TypeScript",
+  "author": "MahoushoujoMadoka<MahoushoujoMadoka@outlook.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/MahoushoujoMadoka/utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahoushoujoMadoka/utils"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "typescript",
+    "tools",
+    "types",
+    "utility",
+    "toolkit"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./*": "./dist/*"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "format:fix": "prettier --write --cache .",
+    "lint": "eslint --cache .",
+    "lint:fix": "eslint --fix .",
+    "release": "bumpp --commit --push --tag",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "lodash-es": "^4.17.21"
+  },
+  "dependencies": {
+    "mixpanel-browser": "^2.47.0",
+    "moment": "^2.29.4",
+    "react-ga4": "^2.1.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "0.43.1",
+    "@rollup/plugin-typescript": "^11.1.4",
+    "@types/lodash-es": "^4.17.9",
+    "@types/mixpanel-browser": "^2.47.3",
+    "@types/node": "^20.8.2",
+    "@vitest/coverage-v8": "^0.34.6",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11",
+    "vitest": "^0.34.6"
+  }
+}

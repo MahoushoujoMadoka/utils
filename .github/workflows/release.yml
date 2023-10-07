@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+permissions: write-all
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      # - name: pnpm setup
+      #   uses: pnpm/action-setup@v2
+      # - run: pnpm install
+      # - run: pnpm run build
+      # - name: Deploy npm Packages
+      #   run: npx pleb publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - run: npx conventional-github-releaser -p angular
+        env:
+          CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.GITHUB_TOKEN}}
