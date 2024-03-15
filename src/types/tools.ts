@@ -37,6 +37,7 @@ export type Promisify<T extends (...args: any[]) => any> = (
 export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends Record<string, any> ? DeepPartial<T[K]> : T[K]
 }
+
 export type DeepClone<T extends Record<string, any>> = {
   [K in keyof T]: T[K] extends Record<string, any> ? DeepClone<T[K]> : T[K]
 }
@@ -92,14 +93,14 @@ export type ExtarctPairsFromObjectArray<
   K extends ValidKeys<T[number]>,
   V extends keyof Omit<T[number], K>,
 > = IsTuple<T> extends true
-  ? ExtarctPairsFromObjectArrayInternal<T, K, V>
+  ? ExtarctPairsFromObjectArrayInternal<T, K, V, object>
   : Record<T[number][K] extends PropertyKey ? T[number][K] : never, T[number][V]>
 
 type ExtarctPairsFromObjectArrayInternal<
   T extends readonly unknown[],
   K extends ValidKeys<T[number]>,
   V extends keyof Omit<T[number], K>,
-  Result = Record<string, any>,
+  Result,
 > = T extends readonly [infer Item, ...infer Others]
   ? ExtarctPairsFromObjectArrayInternal<
       Others,
@@ -109,10 +110,10 @@ type ExtarctPairsFromObjectArrayInternal<
         [Key in keyof Item | keyof Result as Key extends keyof Result
           ? Key
           : Key extends K
-          ? Item[K] extends PropertyKey
-            ? Item[K]
-            : never
-          : never]: Key extends keyof Result ? Result[Key] : Item[V]
+            ? Item[K] extends PropertyKey
+              ? Item[K]
+              : never
+            : never]: Key extends keyof Result ? Result[Key] : Item[V]
       }
     >
   : Result
@@ -125,16 +126,16 @@ export type GroupBy<
   K extends keyof T[number],
   Keys extends keyof T[number],
 > = IsTuple<T> extends true
-  ? KeyByInteralType<T, K, Keys>
+  ? GroupByInteralType<T, K, Keys, object>
   : Record<T[number][K] extends PropertyKey ? T[number][K] : never, Pick<T[number], Keys>>
 
-type KeyByInteralType<
+type GroupByInteralType<
   T extends readonly unknown[],
   K extends keyof T[number],
   Keys extends keyof T[number],
-  Result = Record<string, any>,
+  Result,
 > = T extends readonly [infer Item, ...infer Others]
-  ? KeyByInteralType<
+  ? GroupByInteralType<
       Others,
       K,
       Keys,
@@ -142,10 +143,10 @@ type KeyByInteralType<
         [Key in keyof Item | keyof Result as Key extends keyof Result
           ? Key
           : Key extends K
-          ? Item[K] extends string | number
-            ? Item[K]
-            : never
-          : never]: Key extends keyof Result ? Result[Key] : Pick<Item, Keys>
+            ? Item[K] extends string | number
+              ? Item[K]
+              : never
+            : never]: Key extends keyof Result ? Result[Key] : Pick<Item, Keys>
       }
     >
   : Result
@@ -155,7 +156,7 @@ type KeyByInteralType<
 //  T extends readonly any[],
 //  K extends keyof T[number],
 //  Keys extends readonly (keyof any)[],
-//  Result = Record<string, any>,
+//  Result ,
 // > = T extends readonly [infer Item, ...infer Others]
 //  ? GroupBy<
 //    Others,
@@ -233,23 +234,11 @@ export type Compact<
   Result extends unknown[] = [],
 > = Arr extends readonly [infer First, ...infer Rest]
   ? Compact<
-      Rest,
-      First extends Falsey
-        ? Result
-        : Equal<First, number> extends true
-        ? Result
-        : [...Result, First]
-    >
+  Rest,
+  First extends Falsey
+    ? Result
+    : Equal<First, number> extends true
+      ? Result
+      : [...Result, First]
+ >
   : Result
-
-// type ArrayMap<
-//  T extends readonly unknown[],
-//  Fn extends (...args: any) => any,
-// > = IsTuple<T> extends true ? ArrayMapType<T, Fn> : ReturnType<Fn>[]
-// type ArrayMapType<
-//  T extends readonly unknown[],
-//  Fn extends (...args: any) => any,
-//  Res extends readonly unknown[] = [],
-// > = T extends readonly [infer _, ...infer Rest]
-//  ? ArrayMapType<Rest, Fn, [...Res, ReturnType<Fn>]>
-//  : Res

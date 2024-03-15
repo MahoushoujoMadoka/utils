@@ -30,7 +30,7 @@ export default defineConfig({
           tsconfig: './tsconfig.json',
         }),
       ],
-      external: ['moment', 'mixpanel-browser', 'react-ga4', 'lodash-es'],
+      external: ['mixpanel-browser', 'react-ga4', 'lodash-es'],
     },
   },
 })

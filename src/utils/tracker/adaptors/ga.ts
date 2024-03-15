@@ -2,8 +2,6 @@ import ga4 from 'react-ga4'
 import type { ITracker } from '../types'
 
 export class GoogleAnalyticsAdaptor<T = any> implements ITracker<T> {
-  // public symbol = 'googleAnalytics'
-  // public instance = ga4
   private globalParams: Record<string, any> = {}
   public constructor(public id: string) {}
   public init() {

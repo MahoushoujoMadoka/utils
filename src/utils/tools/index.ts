@@ -11,8 +11,8 @@ export function openCenteredWindow(
   options: RequiredBy<OpenWindowOptions, 'width' | 'height'>,
 ) {
   const { width, height } = options
-  const top = (window.screen.availHeight - height) / 2 // 获得窗口的垂直位置;
-  const left = (window.screen.availWidth - width) / 2 // 获得窗口的水平位置;
+  const top = (window.screen.availHeight - height) / 2
+  const left = (window.screen.availWidth - width) / 2
   window.open(url, '_blank', `height=${height}, width=${width}, top=${top}, left=${left}`)
 }
 
@@ -75,4 +75,14 @@ export function OmitNil<T extends Record<string, any>>(value: T) {
     }
   }
   return value
+}
+
+export function buildFormData(data: Record<string, any>) {
+  const formData = new FormData()
+  for (const key in data) {
+    if (Object.hasOwn(data, key)) {
+      formData.append(key, data[key])
+    }
+  }
+  return formData
 }

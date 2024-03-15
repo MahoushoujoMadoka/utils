@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { ObjectArray } from '.'
 
-describe('ObjectArray', () => {
+describe('objectArray', () => {
   const data = [
     { name: 'John', age: 20 },
     { name: 'Mary', age: 25 },

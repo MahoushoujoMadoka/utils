@@ -27,7 +27,6 @@ it('should return "symbol" for symbols', () => {
 
 it('should return "undefined" for undefined', () => {
   expect(getTypeName(undefined)).toBe('undefined')
-  // eslint-disable-next-line no-void
   expect(getTypeName(void 0)).toBe('undefined')
 })
 
